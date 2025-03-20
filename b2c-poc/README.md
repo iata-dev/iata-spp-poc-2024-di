@@ -303,31 +303,3 @@ sequenceDiagram
    Note over M,DW: Original ticket copy is stored in Digital Wallet
    Note over O: Operator can verify ticket details and lounge eligibility
 ```
-
-## Key Features
-
-- Support for multiple wallet providers (e.g., Facephi, SICP A, Dreamix, Northern Block, NeoKe)
-- Offline verification capabilities for scenarios with limited connectivity
-- Compliance with government regulations for logging passenger details
-- Scheduled submission of keys for maintaining system security
-
-## Integration Points
-
-- APIs for credential requests and verifications
-- OpenID4VC protocol for standardized communication between components
-- Trust registries for maintaining a list of trusted credential issuers and verifiers
-
-This system aims to streamline the passenger experience across various touchpoints in air travel while maintaining high security and interoperability standards through the use of Verifiable Credentials technology.
-
-
-## Containers
-- [Digital Wallet](./containers/digital-wallet/README.md) -  Facephi, Neoke
-- [Loyalty VC Issuer](./containers/loyalty-vc-issuer/README.md) - Northern Block
-- [Trust List](./containers/trust-list/README.md) - SICP A
-- [Ground WiFi Captive Portal](./containers/ground-wifi-captive-portal/README.md) - Dreamix
-- [Lounge Access Portal](./containers/lounge-access-portal/README.md) - Dreamix, Northern Block
-- [Verifier Service](./containers/verifier-service/README.md) - Neoke, Sicpa, Cognizant
-- [Government Logging System](./containers/government-logging-system/README.md) 
-
-## Documentation
-- [Architecture Overview](./docs/architecture/README.md)
