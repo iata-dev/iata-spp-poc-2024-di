@@ -1,68 +1,105 @@
-# Digital Identity B2C - FQTV Tier Mutual Recognition and Verification System using Verifiable Credentials
+# Digital Identity B2C - FQTV Tier Mutual Recognition and Verification System  
+*Using Verifiable Credentials for Seamless Passenger Authentication*
 
-## System Overview
+## Overview
 
-This system is designed to provide a seamless, secure, and interoperable authentication and credential verification service for airline and travel-related applications. It leverages Verifiable Credentials (VCs) technology, integrating with various identity providers and wallet solutions to offer a unified experience across multiple airlines and service providers.
-Based on the provided citations, I can attempt to summarize and describe the main value proposition and to-be scenario.
+Project 321 is a Business-to-Customer (B2C) Proof of Concept (PoC) that enhances the passenger experience by allowing secure and seamless access to airline lounges and onboard services using Verifiable Credentials (VCs) and Digital Wallets. The project explores how digital identity solutions can improve frequent flyer program interactions, reduce inefficiencies, and create a frictionless, privacy-preserving passenger journey.
 
-**Main Value Proposition:**
-The main value proposition of the current process is to enable efficient and accurate lounge check-in and access management for known customers, including self-service options using a kiosk ("totem") at the entrance of the lounge. This is achieved through the use of a centralized database (Bienvenue) that stores access data, business rules, and processes. The system also enables human agents to scan boarding passes and check tier levels, ensuring that only eligible customers can access the lounge.
 
-**To-Be Scenario:**
-The to-be scenario involves expanding the current system to include future eligibility credentials, enabling 100% self-service check for customers not known in the departure control system as eligible. This will also involve tracking all customers and their guests who access lounges, including the reason for entitlement, and keeping proof of access for further invoicing/settlement.
+# Scope
+This Proof of Concept (PoC) validates key workflows demonstrating how digital identity and verifiable credentials (VCs) can enhance passenger access to airline services, including:
 
-Additionally, the system will need to support staff in smartly clearing doubts for "unofficial" (i.e., non-tier based) proprietary eligibility, such as VIP or private programs. This will be achieved without exchanging sensitive personal customer information.
+- Wi-Fi Authentication :Enabling frictionless access using verified identity attributes
+- Lounge Entry : Automating entitlement verification based on loyalty status and ticket class
+- Entitlement Management  : Ensuring precise, automated validation of passenger privileges across multiple airline partners and service providers
 
-Key aspects of the to-be scenario include:
+The PoC consists of two main use cases:
 
-1. **Improved self-service capabilities**: enabling 100% self-service check for eligible customers not known in the departure control system.
-2. **Enhanced tracking and proof of access**: keeping a record of all customers and their guests who access lounges, including the reason for entitlement.
-3. **Smart clearing of doubts**: supporting staff in resolving "unofficial" eligibility cases without compromising customer data privacy.
-4. **Integration with loyalty profile synchronization**: achieving recognition of tier levels through seamless synchronization of loyalty profiles.
+- Lounge Access Verification
+- Wi-Fi Access  Onboard/In-Cabin
 
-Overall, the to-be scenario aims to further enhance the efficiency and accuracy of lounge check-in and access management, while also providing a more seamless and user-friendly experience for customers.
+## Lounge Access Verification
+| Step | Description |
+|------|-------------------------------------------|
+| 1. | Passenger selects Lounge Access on the Wi-Fi welcome page. |
+| 2. | System requests boarding pass & Frequent Flyer (FFP) credentials. |
+| 3. | Passenger shares credentials from Digital Wallet. |
+| 4. | System verifies eligibility (ticket class, frequent flyer tier, entitlements). |
+| 5. | Access approved, system generates a QR code for lounge entry. |
 
-## Key Components
+## Wi-Fi Access Onboard/In-Cabin
+| Step | Description |
+|------|-------------------------------------------|
+| 1. | Passenger selects Wi-Fi network onboard. |
+| 2. | Wi-Fi captive portal opens, requesting passport & FFP details. |
+| 3. | Passenger shares credentials from Digital Wallet (or enters manually). |
+| 4. | System verifies identity & entitlements using a trust registry. |
+| 5. | Wi-Fi access granted, passenger is redirected to the welcome page. |
 
-### 1. Loyalty VC Issuer
 
-A software system that:
-- Manages Decentralized Identifiers (DIDs)
-- Issues Verifiable Credentials for loyalty programs
-- Manages credential revocation
+## Decentralized Identity Implementation & Standards
 
-### 2. Trust List
+![Trust triangle](../img/trust-triangle.PNG)
 
-A system for maintaining trust in the ecosystem:
-- Allows adding and removing DIDs from the trust list
-- Distributes the trust list to relevant parties
+ **Issuer(s)**
+Airlines, immigration authorities, or trusted government 
+bodies issue Verifiable Credentials (VCs) (e.g boarding
+passes, loyalty status, or passport-derived credentials) to
+passengers.
 
-### 3. Ground Wi-Fi Captive Portal
+**Holder(s)**
+Passengers securely store their VCs in a Digital Identity
+Wallet (e.g., mobile driver’s license wallets or airlinebranded apps) and selectively present them during checkin, lounge access, or Wi-Fi authentication.
 
-Provides internet access to passengers:
-- Requests necessary credentials
-- Verifies presented credentials
-- Grants or denies Wi-Fi access
+**Verifiers(s)**
+Airlines, airports, lounges, and onboard service providers 
+validate Verifiable Presentations (VPs) to confirm eligibility
+(e.g., lounge access, Wi-Fi entitlements). By leveraging
+Verifiable Credentials, they can verify eligibility by
+cryptographically checking the integrity and authenticity 
+of the VPs while minimizing unnecessary personal data 
+exposure through selective disclosure.
 
-### 4. Lounge Access Portal
+**Verifiable Data Registry(s)**
+Maintains identifiers and status information needed to
+verify the validity and revocation status of Employee VCs,
+based on each travel agency’s web domain. Each travel
+agency manages its own web-domain-based VDR.
 
-Manages access to airline lounges:
-- Generates lounge access passes based on verified credentials
+**Trust Registry**
+The Trust Registry maintains VC type metadata, schemas,
+a trusted list of issuers, and credential issuance authority 
+statements. VC type metadata and schemas define the
+rules, structure, and display requirements for specific
+types of Verifiable Credentials (VCs), guiding issuers,
+verifiers, and wallets on how to handle and validate
+credentials. The trusted list of issuers and credential 
+issuance authority statements supports airlines (verifiers)
+by enabling them to implement validation policies that 
+ensure only trusted travel agency issuers and authorized 
+credentials are accepted. 
 
-### 5. Digital Wallet
+---
 
-A software system for users to:
-- Store Verifiable Credentials
-- Present VCs when requested
-- Handle proof requests and generate presentations
-- Manage redirects after VC presentation
+### Interop Profile
 
-### 6. Verifier Service
+This Proof of Concept (PoC) has developed and implemented an Interoperability Profile as a central approach to implementing decentralized digital identity standards across different technology providers.
 
-Responsible for:
-- Generating presentation requests
-- Handling wallet communication using OpenID4VC protocol
-- Verifying the authenticity and trustworthiness of presented credentials
+The table below summarizes the different standards used in this PoC:
+
+| **Component** | **Standard** | **Purpose** |
+|--------------|-------------|-------------|
+| **VC issuance** | [OpenID for Verifiable Credential Issuance (Implementors Draft v1)](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-ID1.html) | Defines how an Issuer and a Wallet perform the issuance flow (pre-authorized code flow, credential offer/response). |
+| **Holder binding** | SD-JWT VC | Ensures the Verifiable Credential is bound to the holder’s wallet. |
+| **VC presentation** | [OpenID for Verifiable Presentations (OID4VP 20)](https://openid.net/specs/openid-4-verifiable-presentations-1_0-20.html) | Describes how a Holder presents credentials (Verifiable Presentations) to a Verifier, including request and response flows. |
+| **Data format and validation rules to express VC** | [SD-JWT VC (draft-ietf-oauth-sd-jwt-vc-07)](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-07) | Enables selective disclosure and cryptographic binding of claims in a Verifiable Credential. |
+| **VC Revocation** | [OAuth 2.0 Credential Status List (draft-ietf-oauth-status-list-05)](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-status-list-05) | Defines a status list mechanism for revocation checks (active/revoked) so Verifiers can ascertain a credential’s validity. |
+| **Decentralized Identifiers** | [did:web](https://w3c-ccg.github.io/did-method-web) | Specifies a method for hosting DID documents on HTTPS web domains, enabling domain-based DID resolution for key material. |
+| **Cryptographic Suites** | P-256 (secp256r1), ES256 (JWT) | Establishes Elliptic Curve Digital Signature (ECDSA) requirements for signing and signature validation (SHA-256 hashes). |
+| **Trust Registry** | Ad-hoc | Enable airlines to implement validation policies that 
+ensure only trusted airlines, banks, commercial 
+partners issuers and authorized credentials are 
+accepted in the ecosystem. |
 
 ## User Flows
 
