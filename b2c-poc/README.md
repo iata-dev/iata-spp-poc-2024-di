@@ -433,8 +433,5 @@ Below is a high-level overview of the steps illustrating how airlines and truste
 
 > **Note:** For onboard/in-cabin Wi-Fi access, the same process (Steps 7–10) is repeated with appropriate adjustments.
 
----
-
-*© 2025 International Air Transport Association*
 
 
