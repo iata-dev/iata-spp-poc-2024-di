@@ -35,7 +35,6 @@ The PoC consists of two main use cases:
 | 4. | System verifies identity & entitlements using a trust registry. |
 | 5. | Wi-Fi access granted, passenger is redirected to the welcome page. |
 
-
 ## Decentralized Identity Implementation & Standards
 
 ![Trust triangle](../img/trust-triangle.PNG)
@@ -78,7 +77,6 @@ by enabling them to implement validation policies that
 ensure only trusted travel agency issuers and authorized 
 credentials are accepted. 
 
----
 
 ### Interop Profile
 
@@ -310,8 +308,6 @@ This section outlines the high-level Proof-of-Concept (PoC) ecosystem, illustrat
 
 ![Trust triangle](../img/ecosystem-blueprint-b2c.PNG)
 
----
-
 ## Prerequisites
 
 Before issuing and managing Verifiable Credentials, all actors must onboard the ecosystem by registering with the trust registry. This ensures that:
@@ -319,7 +315,6 @@ Before issuing and managing Verifiable Credentials, all actors must onboard the 
 - Credentials issued within the ecosystem are trusted without the need for bilateral setups between each airline partner.
 - In our PoC, Kronos Airlines acts as a consumer of these VCs.
 
----
 
 ## Key Components
 
@@ -334,8 +329,6 @@ Athena Airlines manages the lifecycle of **Top Tier Loyalty VCs** for frequent f
 - **Web-Domain-Based VDR:** Anchors the DID document associated with the issuer (e.g., Athena Airlines) to a controlled web domain, allowing verifiers to resolve the DID document and access verification keys.
 - **Credential Status List:** Maintains the validity of all issued credentials, supporting actions like revocation (e.g., in cases of fraud or misuse).
 
----
-
 ## Passenger and Mobile Wallet
 
 - **Function:** The digital wallet allows the passenger full control over their travel credentials (boarding passes, loyalty cards, and e-passport copy VC) securely stored on their mobile device.
@@ -343,8 +336,6 @@ Athena Airlines manages the lifecycle of **Top Tier Loyalty VCs** for frequent f
   - Seamless access to services such as lounge entry and onboard or terminal Wi-Fi.
   - Instant verification with selective disclosure, enhancing data privacy and real-time trust across airlines, airports, and service providers.
 - **Enhancement:** Future improvements include harmonizing the display of VCs (graphical elements, translations) in alignment with standardized VC visualization rules (e.g., set by IATA).
-
----
 
 ## Kronos Airlines (Verifier)
 
@@ -360,7 +351,6 @@ Kronos Airlines provides two key verifier components:
   2. **Proof Trustworthiness:** Confirms the issuer is trusted and the credential type is authorized.
   3. **Ongoing Validity:** Verifies the credential’s current status via a Credential Status List.
 
----
 
 ## Trust Registries
 
@@ -370,7 +360,6 @@ Kronos Airlines provides two key verifier components:
   - Manage VC metadata, schemas, and type definitions as a centralized repository for credential specifications.
   - Ensure uniformity in issuing, presenting, and validating credentials, thereby providing a scalable and interoperable ecosystem foundation.
 
----
 
 ## Process Steps
 
@@ -431,6 +420,4 @@ Below is a high-level overview of the steps illustrating how airlines and truste
   - If all validations pass, the verification component confirms authenticity and grants the passenger Wi-Fi (or lounge/in-flight) access.
 
 > **Note:** For onboard/in-cabin Wi-Fi access, the same process (Steps 7–10) is repeated with appropriate adjustments.
-
-
 
