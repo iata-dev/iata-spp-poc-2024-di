@@ -300,8 +300,6 @@ sequenceDiagram
    Note over M,DW: Original ticket copy is stored in Digital Wallet
    Note over O: Operator can verify ticket details and lounge eligibility
 ```
-## Demo User Flow
-
 # Ecosystem Blueprint
 
 This section outlines the high-level Proof-of-Concept (PoC) ecosystem, illustrating how a traveler can obtain verifiable credentials (VCs) from Kronos Airlines and self-derive an e-passport VC.
