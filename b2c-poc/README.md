@@ -303,3 +303,138 @@ sequenceDiagram
    Note over M,DW: Original ticket copy is stored in Digital Wallet
    Note over O: Operator can verify ticket details and lounge eligibility
 ```
+## Demo User Flow
+
+# Ecosystem Blueprint
+
+This section outlines the high-level Proof-of-Concept (PoC) ecosystem, illustrating how a traveler can obtain verifiable credentials (VCs) from Kronos Airlines and self-derive an e-passport VC.
+
+![Trust triangle](../img/ecosystem-blueprint-b2c.PNG)
+
+---
+
+## Prerequisites
+
+Before issuing and managing Verifiable Credentials, all actors must onboard the ecosystem by registering with the trust registry. This ensures that:
+- **Participants (Athena Airlines, Kronos Airlines, and the self-derived e-passport issuance authority)** are registered.
+- Credentials issued within the ecosystem are trusted without the need for bilateral setups between each airline partner.
+- In our PoC, Kronos Airlines acts as a consumer of these VCs.
+
+---
+
+## Key Components
+
+### Self-derived E-passport Copy Issuance Authority
+- **Function:** Securely capture a traveler’s physical passport data through MRZ scanning and NFC chip reading.
+- **Validation:** Performs liveness and document authentication to derive a foundational digital identity credential.
+- **Outcome:** Issues an e-passport copy VC, which is stored in the traveler's digital wallet.
+
+### Athena and Kronos Airlines (Issuers)
+Athena Airlines manages the lifecycle of **Top Tier Loyalty VCs** for frequent flyer members, while Kronos Airlines handles the **Boarding Pass VCs** issued post check-in. Three key components are involved in managing the VC lifecycle:
+- **VC Issuance:** Enables the creation and issuance of credentials to travelers' digital wallets.
+- **Web-Domain-Based VDR:** Anchors the DID document associated with the issuer (e.g., Athena Airlines) to a controlled web domain, allowing verifiers to resolve the DID document and access verification keys.
+- **Credential Status List:** Maintains the validity of all issued credentials, supporting actions like revocation (e.g., in cases of fraud or misuse).
+
+---
+
+## Passenger and Mobile Wallet
+
+- **Function:** The digital wallet allows the passenger full control over their travel credentials (boarding passes, loyalty cards, and e-passport copy VC) securely stored on their mobile device.
+- **Benefits:** 
+  - Seamless access to services such as lounge entry and onboard or terminal Wi-Fi.
+  - Instant verification with selective disclosure, enhancing data privacy and real-time trust across airlines, airports, and service providers.
+- **Enhancement:** Future improvements include harmonizing the display of VCs (graphical elements, translations) in alignment with standardized VC visualization rules (e.g., set by IATA).
+
+---
+
+## Kronos Airlines (Verifier)
+
+Kronos Airlines provides two key verifier components:
+
+### 1. Portals
+- **Airline Wi-Fi Captive Portal:** Designed for consuming VCs during on-ground Wi-Fi authentication, and subsequently facilitating lounge access verification.
+- **Onboard Wi-Fi Captive Portal:** Ensures seamless authentication for in-flight connectivity.
+
+### 2. Verification Service
+- **Functions:**
+  1. **Cryptographic Verification:** Checks the validity of the credential.
+  2. **Proof Trustworthiness:** Confirms the issuer is trusted and the credential type is authorized.
+  3. **Ongoing Validity:** Verifies the credential’s current status via a Credential Status List.
+
+---
+
+## Trust Registries
+
+- **Role:** The Trust Registry enables airlines to verify that a credential originates from a trusted actor.
+- **Responsibilities:**
+  - Validate whether issuers are authorized to issue specific credential types (e.g., Top Tier Loyalty VC, Boarding Pass VC, e-passport copy VC).
+  - Manage VC metadata, schemas, and type definitions as a centralized repository for credential specifications.
+  - Ensure uniformity in issuing, presenting, and validating credentials, thereby providing a scalable and interoperable ecosystem foundation.
+
+---
+
+## Process Steps
+
+Below is a high-level overview of the steps illustrating how airlines and trusted authorities issue credentials, how travelers present them, and how airlines verify them against the Trust Registry.
+
+### **Prerequisite for Issuers**
+- **Provisioning:** 
+  - Generate signing keys and associate them with the issuer.
+  - Anchor a DID using the `did:web` method and publish the DID Document containing the issuer’s public keys and metadata.
+
+### **Steps 1-3: Register Trusted Issuer and VC Type**
+- **Registration:** 
+  - Athena Airlines, Kronos Airlines, and the e-passport copy issuance authority register their DIDs with the Trust Registry.
+  - Request and obtain credential issuance authority to issue the respective VCs (Top Tier Loyalty VC, Boarding Pass VC, and e-Passport copy VC).
+
+### **Step 4: Self-Derive E-passport Copy VC**
+- **Data Capture:** 
+  - **MRZ Scanning:** Traveler scans the Machine Readable Zone using a mobile device.
+  - **NFC Chip Reading:** System reads the passport chip for biometric and biographic data.
+- **Validation:** Perform liveness and document authentication.
+- **Credential Derivation:** 
+  - Derive the foundational digital identity.
+  - Cryptographically sign the VC.
+  - Include a status claim pointing to the Credential Status List.
+  - Bind and securely deliver the VC to the traveler’s device.
+
+### **Steps 5-6: VC Issuance**
+- **Issuance Process:** 
+  - Athena and Kronos Airlines issue their respective VCs (Top Tier Loyalty and Boarding Pass).
+  - Data is obtained from airline sources, cryptographically signed, and the status is maintained via a Credential Status List.
+  - The VC is securely delivered to the traveler's digital wallet.
+
+### **Step 7: VP Initiation**
+- **Access Request:** 
+  - The Wi-Fi Captive Portal displays a QR code (or deep link) encoding a proof request URL.
+  - The traveler scans the QR code or clicks the link to trigger the Verifiable Presentation (VP) process in their digital wallet.
+
+### **Step 8: VP Presentation**
+- **Presentation:** 
+  - The traveler's digital wallet prepares a Verifiable Presentation, optionally with selective disclosure.
+  - The cryptographically signed VP is sent to the airline’s verification service.
+
+### **Step 9a: Verify Verifiable Presentation**
+- **Verification Process:** 
+  - The verification service resolves the issuer’s DID via `did:web`.
+  - Retrieves the issuer’s DID Document to access the public key.
+  - Uses the public key to cryptographically verify the integrity and authenticity of the VP.
+
+### **Step 9b: Verify Credential Status**
+- **Status Check:** 
+  - Retrieve the Credential Status List from the issuer’s URL.
+  - Check the corresponding status bit to confirm if the credential is active or revoked.
+
+### **Step 10: Verify Trusted Issuer Type**
+- **Final Validation:** 
+  - Confirm the issuer’s DID is listed in the Trusted Issuers List in the Trust Registry.
+  - Verify that the issuer is authorized to issue the credential (e.g., Top Tier Loyalty VC) by consulting the Trust Registry.
+  - If all validations pass, the verification component confirms authenticity and grants the passenger Wi-Fi (or lounge/in-flight) access.
+
+> **Note:** For onboard/in-cabin Wi-Fi access, the same process (Steps 7–10) is repeated with appropriate adjustments.
+
+---
+
+*© 2025 International Air Transport Association*
+
+
