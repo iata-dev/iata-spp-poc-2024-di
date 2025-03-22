@@ -23,9 +23,9 @@ The PoC integrates:
 | 7 | Agent Digital ID Revocation | Travel agency revokes the agent's digital credential if needed. |
 
 
-
-
 ## Decentralized Identity Implementation & Standards
+
+![Trust triangle](../img/trust-triangle.PNG)
 
 This PoC leverages decentralized identity standards to ensure a robust and secure digital identity ecosystem. By using these standards, the system can maintain a trusted network of issuers, holders, and verifiers while preserving data privacy and security.
 
@@ -60,7 +60,10 @@ Based on the interoperability profile, multiple independent implementations have
 
 ## Ecosystem Blueprint
 
-The ecosystem blueprint illustrates how travel agencies issue credentials to their employees and how airlines verify these credentials during interactions. Key components include:
+The ecosystem blueprint illustrates how travel agencies issue credentials to their employees and how airlines verify these credentials during interactions. 
+![Trust triangle](../img/ecosystem-blueprint-b2b.PNG)
+
+Key components include:
 
 - **Travel Agency:**  
   - **VC Issuance:** Creation and issuance of Employee VCs.  
