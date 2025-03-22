@@ -74,28 +74,12 @@ Both Project 777 (B2B) and Project 321 (B2C) were showcased at the IATA World Da
 
 ## Vendors and Airlines
 
-### Participating Vendors
+| Participating Vendors    | Participating Airlines  |
+|--------------------------|-------------------------|
+| Dreamix                | Qatar Airways           |
+| SICPA                  | Emirates                |
+| Facephi                | Turkish Airlines        |
+| Neoke                  | Air Canada              |
+| 4 Sure Technologies    |                         |
 
-- **Dreamix**  
-  ![Dreamix Logo](./assets/logos/dreamix.png)
-- **SICPA**  
-  ![SICPA Logo](./assets/logos/sicpa.png)
-- **Facephi**  
-  ![Facephi Logo](./assets/logos/facephi.png)
-- **Neoke**  
-  ![Neoke Logo](./assets/logos/neoke.png)
-- **4 Sure Technologies**  
-  ![4 Sure Technologies Logo](./assets/logos/4_sure_technologies.png)
-
-
-### Participating Airlines
-
-- **Qatar Airways**  
-  ![Qatar Airways Logo](./assets/logos/qatar_airways.png)
-- **Emirates**  
-  ![Emirates Logo](./assets/logos/emirates.png)
-- **Turkish Airlines**  
-  ![Turkish Airlines Logo](./assets/logos/turkish_airlines.png)
-- **Air Canada**  
-  ![Air Canada Logo](./assets/logos/air_canada.png)
 
