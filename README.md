@@ -9,6 +9,16 @@ The project is divided into two PoCs:
 
 Both PoCs were presented at the IATA World Data Symposium (WDS) 2025, highlighting how Digital Identity—using verifiable credentials and wallets—improves security, increases operational efficiency, and enhances the experience for both service providers and travelers.
 
+## Vendors and Airlines
+
+| Participating Vendors    | Participating Airlines  |
+|--------------------------|-------------------------|
+| Dreamix                | Qatar Airways           |
+| SICPA                  | Emirates                |
+| Facephi                | Turkish Airlines        |
+| Neoke                  | Air Canada              |
+| 4 Sure Technologies    |                         |
+
 ## Project 777: B2B Digital Identity PoC
 
 ### Overview
@@ -71,15 +81,5 @@ Both PoCs rely on a governance framework that uses a trust registry to verify is
 
 ## Presented at WDS 2025
 Both Project 777 (B2B) and Project 321 (B2C) were showcased at the IATA World Data Symposium (WDS) 2025, which brought the industry together to explore data, technology, and cybersecurity.
-
-## Vendors and Airlines
-
-| Participating Vendors    | Participating Airlines  |
-|--------------------------|-------------------------|
-| Dreamix                | Qatar Airways           |
-| SICPA                  | Emirates                |
-| Facephi                | Turkish Airlines        |
-| Neoke                  | Air Canada              |
-| 4 Sure Technologies    |                         |
 
 
