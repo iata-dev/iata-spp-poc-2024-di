@@ -1,23 +1,16 @@
-# Digital Identity B2C - FQTV Tier Mutual Recognition and Verification System  
+
+# Digital Identity B2C PoC - Project 321
 *Using Verifiable Credentials for Seamless Passenger Authentication*
-
 ## Overview
-
 Project 321 is a Business-to-Customer (B2C) Proof of Concept (PoC) that enhances the passenger experience by allowing secure and seamless access to airline lounges and onboard services using Verifiable Credentials (VCs) and Digital Wallets. The project explores how digital identity solutions can improve frequent flyer program interactions, reduce inefficiencies, and create a frictionless, privacy-preserving passenger journey.
-
-# Scope
+## Scope
 This Proof of Concept (PoC) validates key workflows demonstrating how digital identity and verifiable credentials (VCs) can enhance passenger access to airline services, including:
 
 - Wi-Fi Authentication :Enabling frictionless access using verified identity attributes
 - Lounge Entry : Automating entitlement verification based on loyalty status and ticket class
 - Entitlement Management  : Ensuring precise, automated validation of passenger privileges across multiple airline partners and service providers
 
-The PoC consists of two main use cases:
-
-- Lounge Access Verification
-- Wi-Fi Access  Onboard/In-Cabin
-
-## Lounge Access Verification
+### Lounge Access Verification
 | Step | Description |
 |------|-------------------------------------------|
 | 1. | Passenger selects Lounge Access on the Wi-Fi welcome page. |
@@ -26,7 +19,7 @@ The PoC consists of two main use cases:
 | 4. | System verifies eligibility (ticket class, frequent flyer tier, entitlements). |
 | 5. | Access approved, system generates a QR code for lounge entry. |
 
-## Wi-Fi Access Onboard/In-Cabin
+### Wi-Fi Access Onboard/In-Cabin
 | Step | Description |
 |------|-------------------------------------------|
 | 1. | Passenger selects Wi-Fi network onboard. |
@@ -95,7 +88,66 @@ The table below summarizes the different standards used in this PoC:
 | **Cryptographic Suites** | P-256 (secp256r1), ES256 (JWT) | Establishes Elliptic Curve Digital Signature (ECDSA) requirements for signing and signature validation (SHA-256 hashes). |
 | **Trust Registry** | Ad-hoc | Enable airlines to implement validation policies that ensure only trusted airlines, banks, commercial partners issuers and authorized credentials are accepted in the ecosystem. |
 
-## User Flows
+## Ecosystem Blueprint
+
+This section outlines the high-level Proof-of-Concept (PoC) ecosystem, illustrating how a traveler can obtain verifiable credentials (VCs) from Kronos Airlines and self-derive an e-passport VC.
+
+![Trust triangle](../img/ecosystem-blueprint-b2c.PNG)
+
+
+
+### Prerequisites  
+Before issuing and managing Verifiable Credentials, all actors (Athena Airlines, Kronos Airlines, and the self-derived e-passport issuance authority) must first onboard the ecosystem by registering with the trust registry. This allows participants to rely on credentials issued within the ecosystem without requiring a bilateral setup with each airline partner. In our PoC, this applies to Kronos Airlines as a consumer of Verifiable Credentials within the ecosystem.  
+
+
+
+### Self-derived e-passport copy issuance authority  
+A foundational digital identity credential is created by securely capturing a traveler’s physical passport data through MRZ scanning and NFC chip reading, while performing liveness and document authentication to derive a foundational credential. Once verified, a e-passport copy verifiable credential is issued and stored in the traveler’s digital wallet.  
+
+
+
+### Athena and Kronos Airlines (Issuers)  
+| **Component**               | **Description**                                                                 |
+|------------------------------|---------------------------------------------------------------------------------|
+| **VC Issuance**              | Enables Athena and Kronos Airlines to create and issue credentials to their frequent flyer members and travelers’ digital wallets. |
+| **Web-Domain-Based VDR**     | Anchors the DID document associated with the Athena Airlines DID to a web domain controlled by the airline, allowing verifiers to resolve the DID document and access verification keys. |
+| **Credential Status List**   | Maintains the validity of all credentials issued by Athena Airlines, enabling actions such as revoking credentials as needed (e.g., fraudulent Activity or Misuse). |  
+
+
+
+### Passenger and Mobile Wallet  
+The passenger, using a mobile digital identity wallet, has full control over their travel credentials: boarding passes, loyalty cards, and e-passport copy data are securely stored on their mobile device.  
+
+This wallet enables seamless access to services such as lounge entry and onboard or terminal Wi-Fi through instant verification, sharing only the necessary data via selective disclosure. As a result, passengers enjoy enhanced data privacy and control while establishing real-time trust and streamlined interactions across airlines, airports, and service providers.  
+
+For this PoC, one of the proposed improvements for wallet implementation is the harmonization of how Verifiable Credentials are displayed in wallets, including graphical elements and translation-based artifacts. This ensures that wallets can present credentials in a way that aligns with the intent of the provider of the VC visualization rules, which in this PoC is a standardization body such as IATA.  
+
+
+
+### Kronos Airlines (Verifier)  
+| **Component**          | **Description**                                                                 |
+|-------------------------|---------------------------------------------------------------------------------|
+| **Portals**             | - Airline Wi-Fi captive portal for on-ground Wi-Fi access and lounge verification.<br>- Onboard Wi-Fi captive portal for in-flight connectivity. |  
+| **Verification Service**| 1. Cryptographically verifies credential validity.<br>2. Confirms issuer trustworthiness and credential authorization.<br>3. Checks revocation status via status list. |  
+
+
+
+### Process Steps  
+| **Step**                 | **Details**                                                                 |
+|--------------------------|-----------------------------------------------------------------------------|
+| **Prerequisite**         | - **Signing keys**: Cryptographic keys generated and associated with issuers.<br>- **DID and DID Document**: DID using `did:web` method anchored, with DID Document accessible online. |  
+| **Steps 1-3**            | - Register Athena/Kronos Airlines and e-passport authority as Trusted Issuers.<br>- Request credential issuance authority for Top Tier Loyalty VC, Boarding Pass VC, and e-Passport copy VC. |  
+| **Step 4**               | - MRZ Scanning<br>- NFC Chip Reading<br>- Liveness/Document Authentication<br>- Credential Derivation<br>- VC signing and binding to traveler’s wallet. |  
+| **Steps 5-6**            | - Obtain loyalty/boarding pass data from airline sources.<br>- Sign VC with issuer’s private key.<br>- Bind VC to traveler’s wallet. |  
+| **Step 7**               | - Wi-Fi Captive Portal displays QR code/deep link with proof request.<br>- Traveler scans QR or clicks link to trigger VP process. |  
+| **Step 8**               | - Wallet prepares Verifiable Presentation (selective disclosure).<br>- Signed VP sent to verification service. |  
+| **Step 9a**              | - Resolve issuer’s DID via `did:web`.<br>- Retrieve DID Document for public key.<br>- Verify VP integrity/authenticity. |  
+| **Step 9b**              | - Retrieve Credential Status List from issuer URL.<br>- Check revocation status. |  
+| **Step 10**              | - Confirm issuer’s DID is in Trusted Issuers List.<br>- Verify credential type authorization via Trust Registry.<br>- Grant Wi-Fi access if valid. |  
+| **Steps 10, 12-14**      | Same as steps 7–10 for Wi-Fi Access Onboard/In-Cabin use case. |# Digital Identity B2C - FQTV Tier Mutual Recognition and Verification System  
+*Using Verifiable Credentials for Seamless Passenger Authentication*
+
+### User Flows
 
 1. **Ground Wi-Fi Access**:
     - Passenger connects to Wi-Fi network
@@ -300,61 +352,4 @@ sequenceDiagram
    Note over M,DW: Original ticket copy is stored in Digital Wallet
    Note over O: Operator can verify ticket details and lounge eligibility
 ```
-# Ecosystem Blueprint
-
-This section outlines the high-level Proof-of-Concept (PoC) ecosystem, illustrating how a traveler can obtain verifiable credentials (VCs) from Kronos Airlines and self-derive an e-passport VC.
-
-![Trust triangle](../img/ecosystem-blueprint-b2c.PNG)
-
-
----
-
-## Prerequisites  
-Before issuing and managing Verifiable Credentials, all actors (Athena Airlines, Kronos Airlines, and the self-derived e-passport issuance authority) must first onboard the ecosystem by registering with the trust registry. This allows participants to rely on credentials issued within the ecosystem without requiring a bilateral setup with each airline partner. In our PoC, this applies to Kronos Airlines as a consumer of Verifiable Credentials within the ecosystem.  
-
-
-
-## Self-derived e-passport copy issuance authority  
-A foundational digital identity credential is created by securely capturing a traveler’s physical passport data through MRZ scanning and NFC chip reading, while performing liveness and document authentication to derive a foundational credential. Once verified, a e-passport copy verifiable credential is issued and stored in the traveler’s digital wallet.  
-
-
-
-## Athena and Kronos Airlines (Issuers)  
-| **Component**               | **Description**                                                                 |
-|------------------------------|---------------------------------------------------------------------------------|
-| **VC Issuance**              | Enables Athena and Kronos Airlines to create and issue credentials to their frequent flyer members and travelers’ digital wallets. |
-| **Web-Domain-Based VDR**     | Anchors the DID document associated with the Athena Airlines DID to a web domain controlled by the airline, allowing verifiers to resolve the DID document and access verification keys. |
-| **Credential Status List**   | Maintains the validity of all credentials issued by Athena Airlines, enabling actions such as revoking credentials as needed (e.g., fraudulent Activity or Misuse). |  
-
-
-
-## Passenger and Mobile Wallet  
-The passenger, using a mobile digital identity wallet, has full control over their travel credentials: boarding passes, loyalty cards, and e-passport copy data are securely stored on their mobile device.  
-
-This wallet enables seamless access to services such as lounge entry and onboard or terminal Wi-Fi through instant verification, sharing only the necessary data via selective disclosure. As a result, passengers enjoy enhanced data privacy and control while establishing real-time trust and streamlined interactions across airlines, airports, and service providers.  
-
-For this PoC, one of the proposed improvements for wallet implementation is the harmonization of how Verifiable Credentials are displayed in wallets, including graphical elements and translation-based artifacts. This ensures that wallets can present credentials in a way that aligns with the intent of the provider of the VC visualization rules, which in this PoC is a standardization body such as IATA.  
-
-
-
-## Kronos Airlines (Verifier)  
-| **Component**          | **Description**                                                                 |
-|-------------------------|---------------------------------------------------------------------------------|
-| **Portals**             | - Airline Wi-Fi captive portal for on-ground Wi-Fi access and lounge verification.<br>- Onboard Wi-Fi captive portal for in-flight connectivity. |  
-| **Verification Service**| 1. Cryptographically verifies credential validity.<br>2. Confirms issuer trustworthiness and credential authorization.<br>3. Checks revocation status via status list. |  
-
-
-
-## Process Steps  
-| **Step**                 | **Details**                                                                 |
-|--------------------------|-----------------------------------------------------------------------------|
-| **Prerequisite**         | - **Signing keys**: Cryptographic keys generated and associated with issuers.<br>- **DID and DID Document**: DID using `did:web` method anchored, with DID Document accessible online. |  
-| **Steps 1-3**            | - Register Athena/Kronos Airlines and e-passport authority as Trusted Issuers.<br>- Request credential issuance authority for Top Tier Loyalty VC, Boarding Pass VC, and e-Passport copy VC. |  
-| **Step 4**               | - MRZ Scanning<br>- NFC Chip Reading<br>- Liveness/Document Authentication<br>- Credential Derivation<br>- VC signing and binding to traveler’s wallet. |  
-| **Steps 5-6**            | - Obtain loyalty/boarding pass data from airline sources.<br>- Sign VC with issuer’s private key.<br>- Bind VC to traveler’s wallet. |  
-| **Step 7**               | - Wi-Fi Captive Portal displays QR code/deep link with proof request.<br>- Traveler scans QR or clicks link to trigger VP process. |  
-| **Step 8**               | - Wallet prepares Verifiable Presentation (selective disclosure).<br>- Signed VP sent to verification service. |  
-| **Step 9a**              | - Resolve issuer’s DID via `did:web`.<br>- Retrieve DID Document for public key.<br>- Verify VP integrity/authenticity. |  
-| **Step 9b**              | - Retrieve Credential Status List from issuer URL.<br>- Check revocation status. |  
-| **Step 10**              | - Confirm issuer’s DID is in Trusted Issuers List.<br>- Verify credential type authorization via Trust Registry.<br>- Grant Wi-Fi access if valid. |  
-| **Steps 10, 12-14**      | Same as steps 7–10 for Wi-Fi Access Onboard/In-Cabin use case. |  
+## 
