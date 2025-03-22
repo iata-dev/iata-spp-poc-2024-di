@@ -88,12 +88,29 @@ The table below summarizes the different standards used in this PoC:
 | **Cryptographic Suites** | P-256 (secp256r1), ES256 (JWT) | Establishes Elliptic Curve Digital Signature (ECDSA) requirements for signing and signature validation (SHA-256 hashes). |
 | **Trust Registry** | Ad-hoc | Enable airlines to implement validation policies that ensure only trusted airlines, banks, commercial partners issuers and authorized credentials are accepted in the ecosystem. |
 
+
+
+## Component Implementation Overview
+
+Based on the interoperability profile, multiple independent implementations have been developed to demonstrate interoperability within a standards-based setup. The table below highlights the different implementations for each component.
+
+## Component Implementation Overview
+
+Based on the interoperability profile, multiple independent implementations have been developed to demonstrate interoperability within a standards-based setup. The table below highlights the different implementations for each component.
+
+| Component       | Implementation                                                                 |
+|----------------|----------------------------------------------------------------------------------|
+| Issuer         | Facephi                                        |
+| Wallet         | Neoke Mobile Wallet, Facephi Mobile Wallet |
+| Verifier       | SICPA Verifier, Neoke Verifier             |
+| Trust Registry | 4Sure Technologies trust registry                                 |
+
+
 ## Ecosystem Blueprint
 
 This section outlines the high-level Proof-of-Concept (PoC) ecosystem, illustrating how a traveler can obtain verifiable credentials (VCs) from Kronos Airlines and self-derive an e-passport VC.
 
 ![Trust triangle](../img/ecosystem-blueprint-b2c.PNG)
-
 
 
 ### Prerequisites  
