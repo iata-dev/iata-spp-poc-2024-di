@@ -1,5 +1,5 @@
 # Decentralized Identity in Aviation - Project 777  
-*Using Verifiable Credentials for Trusted Digital Identity in Travel*
+*Using Verifiable Credentials for Travel Agency Employee Identity Verification*
 
 ## Overview
 Project 777 is a Business-to-Business (B2B) PoC that tackles identity management and fraud prevention in the travel industry. By leveraging Digital Employee IDs, the solution provides both travel agents and airlines with a secure and efficient identity framework, reducing fraud and streamlining the onboarding process.
