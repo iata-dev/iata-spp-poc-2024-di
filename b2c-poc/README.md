@@ -100,6 +100,7 @@ Based on the interoperability profile, multiple independent implementations have
 
 | Component       | Implementation                                                                 |
 |----------------|----------------------------------------------------------------------------------|
+| Portal         | Dreamix                                        |
 | Issuer         | Facephi                                        |
 | Wallet         | Neoke Mobile Wallet, Facephi Mobile Wallet |
 | Verifier       | SICPA Verifier, Neoke Verifier             |
