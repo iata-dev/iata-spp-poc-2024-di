@@ -16,8 +16,8 @@ Both PoCs were presented at the IATA World Data Symposium (WDS) 2025, highlighti
 | ![Dreamix](img/dreamix-logo.png)       | ![Qatar Airways](img/qatar-logo.png)  |
 | ![SICPA](img/sicpa-logo.png)           | ![Emirates](img/emirates-logo.png)    |
 | ![Facephi](img/facephi-logo.png)       | ![Turkish Airlines](img/turkish-logo.png) |
-| ![Neoke](img/neoke-logo.png)           | ![Air Canada](img/aircanada-logo.png) |
-| ![4 Sure Technologies](img/4sure-logo.png) |                                       |
+| ![Neoke](img/neoke_logo.png)           | ![Air Canada](img/air-canada-logo.png) |
+| ![4 Sure Technologies](img/4sure-technologies.png) |                                       |
 
 
 
