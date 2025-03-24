@@ -23,9 +23,9 @@ The PoC integrates:
 | 7 | Agent Digital ID Revocation | Travel agency revokes the agent's digital credential if needed. |
 
 
-
-
 ## Decentralized Identity Implementation & Standards
+
+![Trust triangle](../img/trust-triangle.PNG)
 
 This PoC leverages decentralized identity standards to ensure a robust and secure digital identity ecosystem. By using these standards, the system can maintain a trusted network of issuers, holders, and verifiers while preserving data privacy and security.
 
@@ -54,13 +54,16 @@ Based on the interoperability profile, multiple independent implementations have
 | **Component**     | **Implementation**                                                                                                     |
 |-------------------|------------------------------------------------------------------------------------------------------------------------|
 | **Issuer**        | Facephi and Neoke                                                                                          |
-| **Wallet**        | Facephi and neoke mobile wallets and web-based  wallet (SICPA and Facephi)                                         |
+| **Wallet**        | Facephi and Neoke mobile wallets and web-based wallet (SICPA and Facephi)                                         |
 | **Verifier**      | Facephi, Neoke, SICPA and 4sure Technologies                                                                                           |
 | **Trust Registry**| 4sure Technologies                                                                                                   |
 
 ## Ecosystem Blueprint
 
-The ecosystem blueprint illustrates how travel agencies issue credentials to their employees and how airlines verify these credentials during interactions. Key components include:
+The ecosystem blueprint illustrates how travel agencies issue credentials to their employees and how airlines verify these credentials during interactions. 
+![Trust triangle](../img/ecosystem-blueprint-b2b.PNG)
+
+Key components include:
 
 - **Travel Agency:**  
   - **VC Issuance:** Creation and issuance of Employee VCs.  
@@ -98,4 +101,3 @@ The following high-level steps outline the process within the ecosystem:
 | **Step 4: Verify Verifiable Presentation** | - The Airline’s verification service resolves the issuer’s DID using the did:web method. <br>- It retrieves the issuer’s DID Document to access the associated public key and then cryptographically verifies the VP.                     |
 | **Step 5: Verify Credential Status**   | - The verification service consults the Credential Status List (referenced in the VC) to confirm whether the credential is active or revoked.                                                                                                   |
 | **Step 6: Verify Trusted Issuer Type** | - The service checks that the issuer’s DID is in the Trusted Issuers List and that the Travel Agency is authorized to issue the credential type by consulting the Trust Registry. <br>- Upon successful validation, the airline proceeds. |
-s.

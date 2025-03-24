@@ -80,6 +80,6 @@ More details: See [Project 321: B2C Digital Identity PoC](./b2c-poc/README.md)
 Both PoCs rely on a governance framework that uses a trust registry to verify issuer legitimacy, ensure credential authorization, and enable airlines to implement validation policies as verifiers.
 
 ## Presented at WDS 2025
-Both Project 777 (B2B) and Project 321 (B2C) were showcased at the IATA World Data Symposium (WDS) 2025, which brought the industry together to explore data, technology, and cybersecurity.
-
+Both Project 777 (B2B) and Project 321 (B2C) were showcased at the IATA World Data Symposium (WDS) 2025, which brought the industry together to explore data, technology, and cybersecurity.  
+You can find the full white paper [here](https://www.iata.org/en/programs/data/data-poc/).
 
