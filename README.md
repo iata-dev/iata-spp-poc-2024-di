@@ -11,6 +11,16 @@ Both PoCs were presented at the IATA World Data Symposium (WDS) 2025, highlighti
 
 ## Vendors and Airlines
 
+| Participating Vendors | Participating Airlines |
+|-----------------------|------------------------|
+| <img src="img/dreamix-logo.png" width="100"/> | <img src="img/qatar-logo.png" width="100"/> |
+| <img src="img/sicpa-logo.png" width="100"/>   | <img src="img/emirates-logo.png" width="100"/> |
+| <img src="img/facephi-logo.png" width="100"/> | <img src="img/turkish-airlines-logo.png" width="100"/> |
+| <img src="img/neoke-logo.png" width="100"/>   | <img src="img/air-canada-logo.png" width="100"/> |
+| <img src="img/4sure-logo.png" width="100"/>   |                                            |
+
+
+
 | Participating Vendors    | Participating Airlines  |
 |--------------------------|-------------------------|
 | Dreamix                | Qatar Airways           |
