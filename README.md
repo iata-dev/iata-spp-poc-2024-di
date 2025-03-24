@@ -20,15 +20,6 @@ Both PoCs were presented at the IATA World Data Symposium (WDS) 2025, highlighti
 | <img src="img/4sure-technologies.png" width="100"/><br>4 Sure Technologies |                                                     |
 
 
-
-| Participating Vendors    | Participating Airlines  |
-|--------------------------|-------------------------|
-| Dreamix                | Qatar Airways           |
-| SICPA                  | Emirates                |
-| Facephi                | Turkish Airlines        |
-| Neoke                  | Air Canada              |
-| 4 Sure Technologies    |                         |
-
 ## Project 777: B2B Digital Identity PoC
 
 ### Overview
