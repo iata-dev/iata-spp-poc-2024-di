@@ -13,12 +13,11 @@ Both PoCs were presented at the IATA World Data Symposium (WDS) 2025, highlighti
 
 | Participating Vendors                              | Participating Airlines                              |
 |----------------------------------------------------|-----------------------------------------------------|
-| <div align="center"><img src="img/dreamix-logo.png" height="60"><br><strong>Dreamix</strong></div>               | <div align="center"><img src="img/qatar-logo.png" height="60"><br><strong>Qatar Airways</strong></div>        |
-| <div align="center"><img src="img/sicpa-logo.png" height="60"><br><strong>SICPA</strong></div>                   | <div align="center"><img src="img/emirates-logo.png" height="60"><br><strong>Emirates</strong></div>          |
-| <div align="center"><img src="img/facephi-logo.png" height="60"><br><strong>Facephi</strong></div>               | <div align="center"><img src="img/turkish-airlines-logo.png" height="60"><br><strong>Turkish Airlines</strong></div> |
-| <div align="center"><img src="img/neoke_logo.png" height="60"><br><strong>Neoke</strong></div>                   | <div align="center"><img src="img/air-canada-logo.png" height="60"><br><strong>Air Canada</strong></div>      |
-| <div align="center"><img src="img/4sure-technologies.png" height="60"><br><strong>4 Sure Technologies</strong></div> | <div align="center">&nbsp;</div>                                               |
-
+| <div align="center"><img src="img/dreamix-logo.png" height="60" style="max-width: 150px;"><br><strong>Dreamix</strong></div> | <div align="center"><img src="img/qatar-logo.png" height="60" style="max-width: 150px;"><br><strong>Qatar Airways</strong></div> |
+| <div align="center"><img src="img/sicpa-logo.png" height="60" style="max-width: 150px;"><br><strong>SICPA</strong></div> | <div align="center"><img src="img/emirates-logo.png" height="60" style="max-width: 150px;"><br><strong>Emirates</strong></div> |
+| <div align="center"><img src="img/facephi-logo.png" height="60" style="max-width: 150px;"><br><strong>Facephi</strong></div> | <div align="center"><img src="img/turkish-airlines-logo.png" height="60" style="max-width: 150px;"><br><strong>Turkish Airlines</strong></div> |
+| <div align="center"><img src="img/neoke_logo.png" height="60" style="max-width: 150px;"><br><strong>Neoke</strong></div> | <div align="center"><img src="img/air-canada-logo.png" height="60" style="max-width: 150px;"><br><strong>Air Canada</strong></div> |
+| <div align="center"><img src="img/4sure-technologies.png" height="60" style="max-width: 150px;"><br><strong>4 Sure Technologies</strong></div> | <div align="center">&nbsp;</div> |
 
 ## Project 777: B2B Digital Identity PoC
 
