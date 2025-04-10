@@ -1,0 +1,24 @@
+{
+  "name": "captive-portal-backend-iata",
+  "version": "1.0.0",
+  "description": "Captive Portal Backend Service for B2C verifier",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
+  },
+  "author": "Dreamix Ltd.",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "16.4.7",
+    "express": "^4.21.2",
+    "jwt-decode": "^4.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "7.0.3",
+    "nodemon": "3.1.4"
+  }
+}
