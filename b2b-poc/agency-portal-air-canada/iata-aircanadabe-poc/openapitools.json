@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.10.0",
+    "generators": {
+      "v1.1.0": {
+        "generatorName": "typescript-nestjs",
+        "inputSpec": "./src/nb-orbit-api/lob/swagger.json",
+        "output": "./src/nb-orbit-api/lob/codegen",
+        "skipValidateSpec": true,
+        "importMappings": {
+          "ModelDate": "model/date"
+        },
+        "additionalProperties": {
+          "fileNaming": "kebab-case"
+        }
+      }
+    }
+  }
+}
