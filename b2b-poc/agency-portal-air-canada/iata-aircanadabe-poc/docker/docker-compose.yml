@@ -1,0 +1,19 @@
+version: '3'
+services:
+  iata-aircanadabe-poc:
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    image: 'iata-aircanadabe-poc:latest'
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    container_name: iata-aircanadabe-poc
+    env_file:
+      - ../.env # Load environment variables from the .env file
+    ports:
+      - '${APPLICATION_PORT}:${APPLICATION_PORT}'
+    networks:
+      - iata-aircanadabe-network
+
+networks:
+  iata-aircanadabe-network:
