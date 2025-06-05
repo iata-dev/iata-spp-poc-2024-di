@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} */
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+
+@layer components {
+  .schema-form {
+    /* Left side is not needed due to fieldset left margin */
+    @apply mr-2;
+    background-color: rgb(var(--background-end-rgb));
+  }
+  /* Aka sections */
+  .schema-form fieldset > legend {
+    /* Display block doesn't work for some reason. Does not fill parent width which is still a div, not sure why */
+    @apply mb-3 pb-1 w-full border-b pt-4 text-xl font-semibold;
+  }
+  .schema-form fieldset > div {
+    /* Offset to indicate hierarchy */
+    @apply ml-3;
+  }
+  /* Label + component = group */
+  .schema-form .form-group {
+    @apply mb-2;
+  }
+  .schema-form label.control-label {
+    @apply block mb-2 font-medium text-gray-900 dark:text-white pt-2;
+  }
+
+  .schema-form li.text-danger {
+    @apply font-medium text-red-500;
+  }
+
+  .schema-form .form-group.field {
+    @apply mb-5
+  }
+  .schema-form p.field-description {
+    @apply text-sm italic font-light;
+  }
+  /* Select component, and maybe other .form-control too */
+  .schema-form .form-control {
+    @apply block w-full rounded-md border border-solid p-2;
+  }
+  /* Input component */
+  .schema-form input {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  }
+
+  /* Array elements */
+  .schema-form .array-item {
+    /* @apply grid grid-cols-12; */
+    @apply flex flex-row items-end gap-4;
+  }
+  .schema-form .array-item .col-xs-9 {
+    /* @apply col-span-9; */
+    @apply grow;
+  }
+  .schema-form .array-item .col-xs-3 {
+    /* @apply col-span-3; */
+    @apply shrink-0;
+  }
+  .schema-form .array-item .array-item-toolbox {
+    /* mb-4 to match .form-group */
+    @apply mb-4 flex items-center justify-end;
+  }
+  /* Icons */
+  .schema-form .glyphicon {
+    @apply font-normal not-italic;
+  }
+  .schema-form .glyphicon-remove::before {
+    content: 'Remove';
+  }
+  .schema-form .glyphicon-arrow-up::before {
+    content: 'Up';
+  }
+  .schema-form .glyphicon-arrow-down::before {
+    content: 'Down';
+  }
+  .schema-form .glyphicon-plus::before {
+    content: 'Add';
+  }
+  /* Buttons (tends to be icon buttons */
+  .schema-form .btn {
+    @apply rounded-md p-2 border mx-1;
+  }
+  .schema-form .btn-danger {
+    @apply border-red-200;
+  }
+  .schema-form .btn-add {
+    @apply border-blue-200;
+  }
+  .schema-form button[type='submit'] {
+    @apply bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded
+  }
+  .schema-form .errors {
+    @apply text-red-500 text-sm;
+  }
+  .schema-form .panel.panel-danger {
+    @apply border border-red-300 bg-red-100 text-red-900;
+  }
+}
+
