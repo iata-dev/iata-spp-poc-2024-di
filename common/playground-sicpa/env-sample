@@ -1,0 +1,7 @@
+# Sample .env file for the DTS Agen
+COGNITO_CLIENT_ID=<your_cognito_client_id>
+COGNITO_CLIENT_SECRET="<your_cognito_client_secret>"
+COGNITO_TOKEN_URL=<your_cognito_token_url>
+CRED_API_BASE_URL=https://api.pre.vc-dts.sicpa.com
+DTS_AGENT_ID=<your_dts_agent_id>
+DTS_VERIFIER_DID_ID=<your_dts_verifier_did_id>
