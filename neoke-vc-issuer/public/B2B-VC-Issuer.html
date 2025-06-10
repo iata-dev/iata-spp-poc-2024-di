@@ -1,0 +1,1089 @@
+<html>
+
+<head>
+    <title>B2B VC Issuer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            background-color: #f7f6f8;
+            font-size: 1rem;
+            font-family: system-ui, Arial, Helvetica, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            color: #28272e;
+            padding: 2rem 1rem;
+            margin: 0;
+            line-height: 140%;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        input[type='text'],
+        input[type='number'],
+        textarea,
+        select {
+            font: inherit;
+            font-family: monospace;
+        }
+
+        input:focus-visible,
+        select:focus-visible,
+        button:focus-visible,
+        textarea:focus-visible {
+            outline: 2px solid #5843de;
+            box-shadow: 0px 0px 0px 4px rgba(86, 65, 220, 0.2);
+        }
+
+        form>div {
+            position: relative;
+        }
+
+        .wrap {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid #f1f1f3;
+            box-shadow: 0px 9px 2px 0px rgba(0, 0, 0, 0),
+                0px 6px 2px 0px rgba(0, 0, 0, 0), 0px 3px 2px 0px rgba(0, 0, 0, 0.01),
+                0px 1px 1px 0px rgba(0, 0, 0, 0.02), 0px 0px 1px 0px rgba(0, 0, 0, 0.02);
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        #result {
+            display: none;
+        }
+
+        label,
+        .label {
+            display: block;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        input[type='text'],
+        input[type='number'],
+        textarea {
+            margin-bottom: 1.5rem;
+            margin-top: 8px;
+            width: 100%;
+            border: 1px solid #d7d6dc;
+            border-radius: 8px;
+            font-size: 1rem;
+            padding: 1rem 0.75rem;
+        }
+
+        canvas {
+            margin-bottom: 1.5rem;
+            margin-top: 8px;
+        }
+
+        .select {
+            margin-bottom: 1.5rem;
+            margin-top: 8px;
+            width: 100%;
+            border: 1px solid #d7d6dc;
+            border-radius: 8px;
+            font-size: 1rem;
+            padding: 1rem 1.5rem 1rem 0.75rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18.582 10.4961L12.6445 16.086C12.4648 16.2891 12.2304 16.375 12 16.375C11.7695 16.375 11.5359 16.2896 11.3554 16.1187L5.41793 10.4961C5.04176 10.1368 5.02613 9.54302 5.38121 9.16802C5.73785 8.78911 6.33355 8.77739 6.70699 9.13286L12 14.1446L17.2929 9.12896C17.6664 8.77372 18.2597 8.78716 18.6187 9.16558C18.9726 9.54302 18.957 10.1368 18.582 10.4961Z' fill='%236D6B7E'/%3E%3C/svg%3E%0A");
+            background-repeat: no-repeat;
+            background-position: center right 16px;
+        }
+
+        button,
+        input[type='submit'],
+        input[type='button'] {
+            border-radius: 64px;
+            border: none;
+            background-color: #5843de;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover,
+        button:active,
+        input[type='submit']:hover,
+        input[type='submit']:active {
+            background-color: #4938b8;
+        }
+
+        pre {
+            text-wrap: wrap;
+            overflow-wrap: break-word;
+            margin-bottom: 2rem;
+        }
+
+        .result {
+            margin-top: 2rem;
+            background-color: #f7f6f8;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .result-error {
+            background-color: #fee2e2;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        #deeplink {
+            margin-top: 2rem;
+            cursor: pointer;
+        }
+
+        .error {
+            display: none;
+            position: absolute;
+            font-size: 0.875rem;
+            bottom: 0;
+        }
+
+        .error,
+        #error,
+        #error-label {
+            color: darkred;
+        }
+
+        .caption-wrap {
+            margin-top: -1rem;
+            word-break: break-all;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .caption-title {
+            font-weight: 500;
+        }
+
+        .caption-content {
+            display: inline;
+            font-size: 0.875rem;
+            margin: 0;
+            color: #6d6b7e;
+        }
+
+        .spinner {
+            width: 64px;
+            height: 64px;
+            border: 4px solid #e0e0e0;
+            border-top-color: #5843de;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        .backdrop {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        input[type='submit'].delete {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            flex-wrap: wrap;
+            border-radius: var(--radius-rounded, 999px);
+            background: var(--components-button-btn-error-bg, #fbeae9);
+
+            color: var(--text-text-error, #aa281e);
+            text-align: center;
+        }
+
+        input[type='submit'].delete:hover {
+            background: var(--components-button-btn-error-bg-hover, #f7d7d5);
+        }
+
+        input[type='submit']:disabled {
+            color: var(--text-text-muted, #868496);
+            background: var(--components-button-btn-bg-disabled, #f1f1f3);
+        }
+
+        input[type='submit']:disabled:hover {
+            color: var(--text-text-muted, #868496);
+            background: var(--components-button-btn-bg-disabled, #f1f1f3);
+        }
+
+        .action-buttons {
+            margin-left: 10px;
+        }
+
+        .modal-content {
+            width: 300px;
+            height: 200px;
+            border-radius: 12px;
+            border: 1px solid #f1f1f3;
+            box-shadow: 0px 9px 2px 0px rgba(0, 0, 0, 0),
+                0px 6px 2px 0px rgba(0, 0, 0, 0), 0px 3px 2px 0px rgba(0, 0, 0, 0.01),
+                0px 1px 1px 0px rgba(0, 0, 0, 0.02), 0px 0px 1px 0px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+            padding: 20px 40px;
+            justify-content: space-between;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spinner::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 6px;
+            transform: translateY(-50%);
+            height: 4px;
+            width: 4px;
+            background: #5843de;
+            border-radius: 8px;
+        }
+
+        .spinner::after {
+            content: '';
+            position: absolute;
+            right: 6px;
+            top: 8px;
+            transform: translateY(-50%);
+            height: 4px;
+            width: 4px;
+            background: #5843de;
+            border-radius: 8px;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .organization-info {
+            margin-bottom: 15px;
+        }
+
+        .organization-info details {
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0.5rem;
+            max-width: 800px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .organization-info details summary {
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            outline: none;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .organization-info details[open] summary {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .organization-info details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .organization-info details summary::after {
+            content: '▼';
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .organization-info details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .info-grid {
+            padding: 1rem;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .info-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .buttons-rows {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+
+        .buttons-rows .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        button:disabled {
+            background-color: #f1f1f3;
+            color: #868496;
+            cursor: not-allowed;
+        }
+
+        button.inactive {
+            background-color: #f1f1f3;
+            color: #868496;
+
+
+        }
+
+        #indexes {
+            display: grid;
+            grid-gap: 1rem;
+        }
+
+        .index {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+
+        .flex-1 {
+            flex: 1;
+        }
+    </style>
+    <script src="https://unpkg.com/pako/dist/pako.min.js"></script>
+    <script>
+        const VCT = 'https://iata.trustregistry.nborbit.ca/employee';
+        const VCT_ID = 'Employee';
+        const apiKey = '[NEOKE-API-KEY]'; // Replace with your Neoke API key
+        const baseUrl = '[NEOKE-BASE-URL]'; // Replace with your Neoke base URL
+        var agencyMode = 'vc';
+        var indexes = {};
+
+        const AGENCY = {
+            logo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAY1BMVEXNUkH56efZfXHTaFnz08/QXU3mqKD23tvvycT89fPps6zgk4jWc2XjnpTsvrfjnZTsvrjciH3z1M/////89PPtvrfgkojps6vdiHzciHzfkonvycPmqaDZfnHafnDinpTfk4hDpc9HAAABnElEQVR4Xu2Sx7LbMAxFwa5e3d9L+f+vjChAhDRJKK89OBuDluaAwgV8GIIgCIIgCIIgjC9khEhzvxI/wfkVA9DiXwD1NQEnmJlQ8fSYExr0VoDa3rDp8QVO6PZio1jswG/iGosCoEziACeovZgMdCNL4q3w4Ph5AXn0zGJUEVO6njaH4RD+dBIsRhVRQfJ1x+FcVOQJWRyb1HYqXhGTgtQqdf7iIeShWAYU01wMIBWJB55qiMVdLzSQx65eT+KW4z4MPJNddonNJq4wNYQH/q/sesjisfkmtvu4GzQwDtp9l/Mlnq4BxXhHihuzu6AmPlC0QsraoJQ7W2JG0R2bfXbF6g2UneXGebqDmPq0ziyQpcedphGth+/Xwg/IUh7Fng+BLLpcnZhd82529XwUD3yYyLKmMFSY3ePd7CxlYcNf4gq7hlWsLW8j4drW5JaYet9Q3O4/tUO/jcqSs0NU3XdVfhIKWOzU7lMDbsAi6xvKjiOZnrfx1//FfmGMVROrHsD89oQB+hmX2mDpfELD2Br4EARBEARBEARB+AOKTz7elYke+AAAAABJRU5ErkJggg==',
+        };
+
+        const API = {
+            organizationInfo: () =>
+                fetch(baseUrl + '/org/info', {
+                    headers: { "neoke-api-key": apiKey },
+                }).then((r) => r.json()),
+
+            createWallet: ({ alias, agency }) =>
+                fetch(baseUrl + '/org/wallet/create/agency-' + alias.replaceAll(' ', '_'), {
+                    method: 'POST',
+                    headers: {
+                        "neoke-api-key": apiKey,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        display: [
+                            {
+                                name: alias,
+                                locale: 'en-US',
+                                logo: {
+                                    uri: agency.logo,
+                                    alt_text: alias,
+                                },
+                            },
+                        ],
+                    }),
+                })
+                    .then((r) => r.json())
+                    .then(({ after }) => after),
+
+            deleteWallet: ({ alias }) =>
+                fetch(baseUrl + '/org/wallet/delete/' + alias, {
+                    method: 'DELETE',
+                    headers: { "neoke-api-key": apiKey },
+                }),
+
+            addIssuanceCredentialSupported: ({ alias, vct }) =>
+                fetch(
+                    baseUrl +
+                    '/org/add-issuance-credential-supported/agency-' +
+                    alias,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "neoke-api-key": apiKey,
+                        },
+                        body: JSON.stringify({
+                            vc: {
+                                id: VCT_ID,
+                                vct,
+                                claims: {},
+                                display: [
+                                    {
+                                        logo: {
+                                            uri: 'https://iata.trustregistry.nborbit.ca/logo/travel-agency-vc-employee-logo.png',
+                                            alt_text:
+                                                'Employee Agency Verifiable Credential',
+                                        },
+                                        name: 'Employee Agency Verifiable Credential',
+                                        locale: 'en-US',
+                                        text_color: '#f9f9f9',
+                                        description:
+                                            'A Verifiable Credential for employees working at a travel agency',
+                                        background_color: '#3140f5',
+                                    },
+                                ],
+                            },
+                        }),
+                    }
+                ),
+
+            issueVC: ({ alias, vc }) =>
+                fetch(baseUrl + '/org/generate-credential-offer/' + alias, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "neoke-api-key": apiKey,
+                    },
+                    body: JSON.stringify({
+                        vcs: [
+                            {
+                                id: VCT_ID,
+                                claims: {
+                                    employee: vc,
+                                },
+                                hb: 'cnf',
+                                disclosureFrame: {
+                                    employee: {
+                                        _sd: Object.keys(vc),
+                                    },
+                                },
+                            },
+                        ],
+                    }),
+                }).then((r) => r.json()),
+
+            readIndexes: ({ alias, value }) =>
+                fetch(baseUrl + '/org/credential/index/' + alias, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'neoke-api-key': apiKey,
+                    },
+                    body: JSON.stringify({
+                        vcid: 'Employee',
+                        claim: 'employee.employeeID',
+                        value
+                    }),
+                }).then((r) => r.json()),
+
+            readStatusListURL: ({ alias }) =>
+                fetch(baseUrl + '/org/statuslist/url/' + alias, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'neoke-api-key': apiKey,
+                    },
+                    body: JSON.stringify({
+                        vct: VCT,
+                    }),
+                })
+                    .then((r) => r.json())
+                    .then(({ url }) => url),
+
+            readStatusList: (url) =>
+                fetch(url, {
+                    headers: {
+                        Accept: 'application/statuslist+jwt',
+                        'Accept-Encoding': 'gzip',
+                    },
+                }).then((r) => r.text()),
+
+            revokeVC: ({ alias, id }) =>
+                fetch(baseUrl + '/org/credential/revoke/' + alias, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'neoke-api-key': apiKey,
+                    },
+                    body: JSON.stringify({
+                        vct: VCT,
+                        idx: id,
+                    }),
+                }).then((r) => r.json()),
+        };
+
+        var response = {};
+        var agency = {};
+        var vc = {};
+        var wallets = [];
+        var isLoading = false;
+
+        validateEmail = (email) => {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        };
+
+        readAgency = () => {
+            agency = {};
+            ['label', 'logo'].forEach((id) => {
+                agency[id] = document.getElementById('agency-' + id).value;
+                if (agency[id] === '') agency[id] = AGENCY[id];
+            });
+            return agency;
+        };
+
+        validateForm = (form) => {
+            const agencyLabel = document.getElementById('agency-label').value;
+            const email = document.getElementById('vc-email').value;
+            const regexLabel = /^[a-zA-Z_-]+$/;
+
+            let isValid = true;
+
+            if (!regexLabel.test(agencyLabel) && form === 'addAgency') {
+                document.getElementById('agency-label').nextElementSibling.innerHTML = 'Agency Label must only contain letters (azAZ), underscores (_), and hyphens (-).';
+                document.getElementById('agency-label').nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+
+            if (
+                form === 'addAgency' && wallets.find((w) => w.alias === 'agency-' + agencyLabel) !== undefined
+            ) {
+                document.getElementById('agency-label').nextElementSibling.innerHTML = 'Agency already exists';
+                document.getElementById('agency-label').nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!validateEmail(email) && form === 'vc') {
+                document.getElementById('vc-email').nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                return false;
+            }
+
+            Array.from(document.getElementsByClassName('error')).forEach((e) => (e.style.display = 'none'));
+            return true;
+        };
+
+        clearForm = (formName) => {
+            const form = document.getElementById(formName);
+            const inputs = form.querySelectorAll('input[type="text"]');
+
+            inputs.forEach((input) => {
+                input.value = '';
+            });
+        };
+
+        toggleLoading = (value) => {
+            document.getElementById('loading').style.display = value ? 'flex' : 'none';
+        };
+
+        toggleDeleteModal = (value) => {
+            document.getElementById('delete-agency').style.display = value
+                ? 'flex'
+                : 'none';
+        };
+
+        toggleModeButton = (mode) => {
+            if (agencyMode === mode) return;
+            agencyMode = mode
+            indexes = {};
+            document.getElementById('revoke-employeeID').value = '';
+            document.querySelector('.indexes-container').innerHTML = ``
+            document.querySelector('#revoke').classList.toggle('inactive');
+            document.querySelector('#vc').classList.toggle('inactive');
+            setVisibleForm(agencyMode);
+        }
+
+        deleteAgency = async () => {
+            agency = {};
+            document.getElementById('result').style.display = 'none';
+            toggleDeleteModal(false);
+            toggleLoading(true);
+
+            await API.deleteWallet({
+                alias: document.getElementById('agency-select').value,
+            })
+                .then(pullWallets)
+                .then(() => {
+                    walletSelection();
+                    toggleLoading(false);
+                })
+                .catch((error) => window.alert(error));
+        };
+
+        revokeVC = async (id) => {
+            id = +id;
+            await API.revokeVC({
+                alias: document.getElementById('agency-select').value,
+                id,
+            })
+                .then(() => {
+                    if (indexes[id] !== undefined) {
+                        indexes[id] = true;
+                        document.getElementById('vc-id-' + id).disabled = true;
+                        document.getElementById('vc-id-' + id).innerText = 'Revoked';
+                    } else {
+                        window.alert('Vc with ID ' + id + ' revoked');
+                    }
+                })
+                .catch((err) => window.alert(JSON.stringify(err, null, 2)));
+        };
+
+        handleAddAgency = () => {
+            var select = document.getElementById('agency-select');
+            document.getElementById('toggleModeButton').style.display = 'none';
+            select.value = '0';
+            setVisibleForm('addAgency');
+
+            indexes = {};
+            document.getElementById('revoke-employeeID').value = '';
+            document.querySelector('.indexes-container').innerHTML = ``
+        };
+
+        processForm = (form) => async (e) => {
+            if (e.preventDefault) e.preventDefault();
+            if (!validateForm(form)) return;
+            [
+                'result',
+                'result-data',
+                'result-error',
+                'result-deeplink',
+                'error-label',
+                'error',
+                'link-label',
+                'link',
+                'deeplink',
+            ].forEach((id) => (document.getElementById(id).style.display = 'none'));
+            ['qr'].forEach((id) => (document.getElementById(id).src = ''));
+            ['error', 'link', 'data'].forEach((id) => (document.getElementById(id).innerText = ''));
+
+            switch (form) {
+                case 'addAgency':
+                    // Add the wallet
+                    readAgency();
+                    toggleLoading(true);
+                    await API.createWallet({ alias: agency.label, agency })
+                        .then((entry) => {
+                            wallets.push(entry);
+                            document.getElementById('agency-select').innerHTML =
+                                '<option value="0">Select an Agency</option>' +
+                                wallets
+                                    .map(
+                                        (entry) => '<option value="' + entry.alias + '">' + entry.alias.substring('agency-'.length).replaceAll('_', ' ') + '</option>'
+                                    )
+                                    .join('');
+                            document.getElementById('agency-select').value = entry.alias;
+                        })
+                        .catch((error) => window.alert(error));
+
+                    // Add the supported vc
+                    await API.addIssuanceCredentialSupported({
+                        alias: agency.label,
+                        vct: VCT,
+                    }).catch((error) => window.alert(error));
+
+                    clearForm('addAgencyForm');
+                    walletSelection();
+                    toggleLoading(false);
+                    break;
+
+                case 'vc':
+                    vc = {};
+                    agency = {};
+                    [
+                        'salutation',
+                        'givenName',
+                        'surname',
+                        'phoneNumber-countryCode',
+                        'phoneNumber-localNumber',
+                        'employeeID',
+                        'email',
+                        'jobTitle',
+                        'pcc',
+                    ].forEach(
+                        (id) => (vc[id] = document.getElementById('vc-' + id).value)
+                    );
+
+                    vc.phoneNumber = {
+                        countryCode: vc['phoneNumber-countryCode'],
+                        localNumber: vc['phoneNumber-localNumber'],
+                    };
+                    delete vc['phoneNumber-countryCode'];
+                    delete vc['phoneNumber-localNumber'];
+                    vc.pcc = Array.from(new Set(vc.pcc.split(' ')));
+
+                    toggleLoading(true);
+
+                    // Issue the vc
+                    response = await API.issueVC({
+                        alias: document.getElementById('agency-select').value,
+                        vc,
+                    }).catch((error) => window.alert(error));
+
+                    clearForm('vcForm');
+                    toggleLoading(false);
+                    document.getElementById('data').innerText = JSON.stringify(vc, null, 2);
+                    if (!response || !response.deeplink) {
+                        [
+                            'result',
+                            'result-data',
+                            'result-error',
+                            'error',
+                            'error-label',
+                        ].forEach(
+                            (id) =>
+                                (document.getElementById(id).style.display = 'block')
+                        );
+                        document.getElementById('error').innerText = JSON.stringify(response, null, 2);
+                    } else {
+                        [
+                            'result',
+                            'result-data',
+                            'result-deeplink',
+                            'link',
+                            'link-label',
+                            'deeplink',
+                        ].forEach((id) => (document.getElementById(id).style.display = 'block'));
+                        document.getElementById('link').innerText = response.deeplink;
+                        document.getElementById('qr').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(response.deeplink);
+                    }
+
+                    break;
+
+                case 'revoke':
+                    let value = document.getElementById('revoke-employeeID').value.trim();
+                    document.querySelector('.indexes-container').innerHTML = 'Loading...';
+                    indexes = {};
+                    if (value !== '') {
+                        let _indexes = await API.readIndexes({
+                            alias: document.getElementById('agency-select').value,
+                            value,
+                        }).then((r) => r.reduce((acc, i) => ({ ...acc, [i]: 'Not revoked' }), {})).catch((error) => {
+                            window.alert(error);
+                            indexes = {}
+                        });
+                        if (_indexes.length != 0) {
+                            const url = await API.readStatusListURL({
+                                alias: document.getElementById('agency-select').value,
+                            });
+
+                            if (url) {
+                                const r = await API.readStatusList(url)
+                                    .catch((error) => {
+                                        window.alert(error);
+                                    });
+
+                                const { status_list: { lst } } = JSON.parse(atob(r.split('.')[1]));
+
+                                let base64Lst = lst.replace(/-/g, '+').replace(/_/g, '/');
+                                while (base64Lst.length % 4) base64Lst += '=';
+
+                                const raw = atob(base64Lst);
+                                const out = new Uint8Array(raw.length);
+                                for (let i = 0; i < raw.length; i++) {
+                                    out[i] = raw.charCodeAt(i);
+                                }
+                                const lstInflate = pako.inflate(out);
+                                let bits = '';
+                                for (let byte of lstInflate) {
+                                    bits += byte.toString(2).padStart(8, '0');
+                                }
+                                for (i in _indexes) {
+                                    indexes[i] = (i >= bits.length) ? false : bits.charAt(Math.floor(i / 8) * 8 + 7 - (i % 8)) === '1';
+                                }
+                            }
+                        }
+                    }
+
+                    document.querySelector('.indexes-container').innerHTML = `
+                <p class="label">Verifiable Credentials Indexes</p>
+                <div id="indexes">${Object.entries(indexes).map(([id, revoked]) => (`
+                    <div class="index">
+                        <p>ID: ${id}</p>
+                        <button type="button" id="vc-id-${id}" onclick="revokeVC(${id})" ${revoked ? 'disabled' : ''} >${revoked ? 'Revoked' : 'Revoke'}</button>
+                    </div>`)).join('')}
+                </div>`;
+                    break;
+
+                default:
+                    window.alert('Invalid form');
+            }
+            return false;
+        };
+
+        setVisibleForm = (value) =>
+            ['addAgency', 'vc', 'revoke'].forEach((id) => (document.getElementById(id + 'Form').style.display = value === id ? 'block' : 'none'));
+
+        pullWallets = async () => {
+            toggleLoading(true);
+            return API.organizationInfo()
+                .then((r) => {
+                    wallets = r.wallets;
+                    wallets = wallets.filter((w) => w.alias.startsWith('agency-'));
+                    document.getElementById('agency-select').innerHTML = '<option value="0">Select an Agency</option>' + wallets.map((wallet) => '<option value="' + wallet.alias + '">' + wallet.alias.substring('agency-'.length).replaceAll('_', ' ') + '</option>').join('');
+                })
+                .then(() => {
+                    toggleLoading(false);
+                })
+                .catch((error) => window.alert(error));
+        };
+
+        walletSelection = () => {
+            var selection = document.getElementById('agency-select').value;
+            document.getElementById('result').style.display = 'none';
+            if (selection !== '0') {
+                const wallet = wallets.find((w) => w.alias === selection);
+                const walletURL = 'https://' + wallet.did.split(':')[2];
+                const issuerMetadataURL = walletURL + '/.well-known/openid-credential-issuer';
+                document.getElementById('issuer-did-display').innerText = wallet.did;
+                document.getElementById('metadata-display').innerHTML = '<a href="' + issuerMetadataURL + '" target="_blank">' + issuerMetadataURL + '</a>';
+                setVisibleForm('vc');
+                if (agencyMode === 'revoke') toggleModeButton('vc');
+                document.getElementById('toggleModeButton').style.display = 'flex';
+
+                indexes = {};
+                document.getElementById('revoke-employeeID').value = '';
+                document.querySelector('.indexes-container').innerHTML = '';
+            } else {
+                document.getElementById('issuer-did-display').innerText = 'No wallet selected';
+                document.getElementById('metadata-display').innerHTML = 'No wallet selected';
+                document.getElementById('toggleModeButton').style.display = 'none';
+                setVisibleForm('');
+
+                indexes = {};
+                document.getElementById('revoke-employeeID').value = '';
+                document.querySelector('.indexes-container').innerHTML = '';
+            }
+        };
+
+        init = async () => {
+            ['logo'].forEach((id) => (document.getElementById('agency-' + id).placeholder = AGENCY[id]));
+
+            toggleLoading(true);
+            await pullWallets();
+
+            ['addAgency', 'vc', 'revoke'].forEach((id) => {
+                let form = document.getElementById(id + 'Form');
+                if (form.attachEvent) {
+                    form.attachEvent('submit', processForm(id));
+                } else {
+                    form.addEventListener('submit', processForm(id));
+                }
+            });
+
+            var deeplink = document.getElementById('deeplink');
+            deeplink.addEventListener('click', (event) => {
+                event.preventDefault();
+                window.open(response.boarding_pass_vc, '_blank');
+                return false;
+            });
+
+            document.getElementById('agency-select').addEventListener('change', walletSelection);
+
+            document.getElementById('toggleModeButton').style.display = 'none';
+            setVisibleForm('');
+        };
+
+    </script>
+</head>
+
+<body onLoad="init()">
+    <div class="logo">
+        <svg width="112" height="24" viewBox="0 0 112 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M18.8081 24C17.3514 24 15.9428 23.4744 14.8384 22.503L8.19551 17.2634L10.1644 14.795L16.9193 20.1301C17.4315 20.5919 18.1038 20.8467 18.8081 20.8467C20.3607 20.8467 21.6253 19.5886 21.6253 18.0438V4.60252C21.6253 3.80624 20.969 3.16921 20.1846 3.16921H20.1366C19.6724 3.16921 19.2883 3.36032 18.9521 3.77439L17.9597 5.00066L15.4786 3.0418L16.4711 1.81553C17.3995 0.668879 18.696 0.0318521 20.1206 0.0318521H20.1686C22.7137 0.0318521 24.7786 2.08626 24.7786 4.61845V18.0597C24.7946 21.3245 22.1055 24 18.8081 24ZM8.32357 22.2004L9.31599 20.9741L6.83493 19.0153L5.8425 20.2415C5.52237 20.6397 5.1382 20.8467 4.658 20.8467H4.60998C3.80963 20.8467 3.16936 20.1938 3.16936 19.4134V5.9562C3.16936 4.41141 4.4339 3.15328 5.98657 3.15328C6.69087 3.15328 7.34715 3.4081 7.87538 3.86994L14.6303 9.20504L16.5991 6.73656L9.95627 1.49701C8.8678 0.541473 7.4592 0 5.98657 0C2.68915 0 0 2.67551 0 5.9562V19.3975C0 21.9297 2.06489 23.9841 4.60998 23.9841H4.658C6.09861 24 7.39517 23.363 8.32357 22.2004Z"
+                fill="#5843DE" />
+            <path
+                d="M47.1882 10.3835V19.3656H44.0189V10.7021C44.0189 8.50431 42.7543 7.30989 40.7215 7.30989C38.4805 7.30989 36.9919 8.67949 36.9919 11.5302V19.3816H33.8225V4.74585H36.9919V6.62508C37.9683 5.12807 39.4569 4.36364 41.5538 4.36364C44.9313 4.34771 47.1882 6.64101 47.1882 10.3835ZM61.2262 15.0338C60.3779 16.2283 59.1133 16.8494 57.4326 16.8494C54.9836 16.8494 53.1908 15.6231 52.7266 13.3935H64.4276C64.5237 12.8361 64.5397 12.4061 64.5397 12.0717C64.5397 9.93762 63.8354 8.09025 62.4588 6.59323C61.0822 5.09622 59.3054 4.33179 57.1605 4.33179C54.8875 4.33179 53.0147 5.06437 51.5741 6.56138C50.1335 8.02654 49.3972 9.84207 49.3972 12.0398C49.3972 14.2694 50.1335 16.1009 51.6061 17.566C53.0788 18.9993 55.0156 19.7319 57.4006 19.7319C60.0898 19.7319 62.1546 18.7923 63.5953 16.8971L61.2262 15.0338ZM57.1445 7.21433C59.2254 7.21433 60.9061 8.44061 61.3543 10.8135H52.7106C53.1428 8.59987 54.7915 7.21433 57.1445 7.21433ZM108.687 15.0338C107.838 16.2283 106.574 16.8494 104.893 16.8494C102.444 16.8494 100.651 15.6231 100.187 13.3935H111.888C111.984 12.8361 112 12.4061 112 12.0717C112 9.93762 111.296 8.09025 109.919 6.59323C108.543 5.09622 106.766 4.33179 104.621 4.33179C102.348 4.33179 100.475 5.06437 99.0344 6.56138C97.5938 8.02654 96.8575 9.84207 96.8575 12.0398C96.8575 14.2694 97.5938 16.1009 99.0665 17.566C100.539 18.9993 102.476 19.7319 104.861 19.7319C107.55 19.7319 109.615 18.7923 111.056 16.8971L108.687 15.0338ZM104.589 7.21433C106.67 7.21433 108.35 8.44061 108.799 10.8135H100.155C100.587 8.59987 102.236 7.21433 104.589 7.21433ZM73.8556 19.7478C76.0326 19.7478 77.8574 19.0153 79.362 17.5182C80.8667 16.0212 81.635 14.2057 81.635 12.0398C81.635 9.87392 80.8667 8.05839 79.362 6.56138C77.8574 5.06437 76.0326 4.33179 73.8556 4.33179C71.7107 4.33179 69.8539 5.06437 68.3493 6.56138C66.8447 8.05839 66.0763 9.87392 66.0763 12.0398C66.0763 14.2057 66.8447 16.0212 68.3493 17.5182C69.8539 19.0153 71.7107 19.7478 73.8556 19.7478ZM70.5902 8.7432C71.4706 7.86729 72.5591 7.42137 73.8556 7.42137C75.1522 7.42137 76.2407 7.86729 77.121 8.7432C78.0014 9.61911 78.4496 10.7339 78.4496 12.0557C78.4496 13.3776 78.0014 14.4924 77.121 15.3683C76.2407 16.2442 75.1522 16.6901 73.8556 16.6901C72.5591 16.6901 71.4706 16.2442 70.5902 15.3683C69.7099 14.4924 69.2617 13.3776 69.2617 12.0557C69.2617 10.7339 69.7099 9.61911 70.5902 8.7432ZM90.3107 11.8965L96.7775 4.72993H92.9038L87.1894 11.1958V0H84.02V19.3656H87.1894V12.5972L93.2239 19.3656H97.0176L90.3107 11.8965Z"
+                fill="#171137" />
+        </svg>
+    </div>
+    <div class="organization-info">
+        <details>
+            <summary>Organization Info</summary>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Issuer DID</h3>
+                    <p id="issuer-did-display">No wallet selected</p>
+                </div>
+                <div class="info-card">
+                    <h3>Metadata</h3>
+                    <p id="metadata-display">No wallet selected</p>
+                </div>
+            </div>
+        </details>
+    </div>
+    <div class="wrap">
+        <h1>B2B VC Issuer</h1>
+        <div id="loading" class="backdrop">
+            <div class="spinner"></div>
+        </div>
+        <did id="content">
+            <div class="buttons-rows">
+                <div class="row" style="justify-content: start; margin-bottom: 1rem;" id="toggleModeButton">
+                    <div class="">
+                        <button id="vc" class="" onclick="toggleModeButton('vc')">Issue VC</button>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="revoke" class="inactive" onclick="toggleModeButton('revoke')">Revoke VC</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="flex: 1;">
+                        <label for="select-agency">Select an Agency</label>
+                        <select class="select" name="select-agency" id="agency-select" required></select>
+                    </div>
+                    <div class="action-buttons" id="addAgencyButton">
+                        <input type="submit" onclick="handleAddAgency()" value="Add New Agency" />
+                    </div>
+                </div>
+            </div>
+            <form id="addAgencyForm">
+                <div>
+                    <label for="agency-label">Agency Label (azAZ_-)</label>
+                    <input type="text" id="agency-label" value="" />
+                    <span class="error">Agency Label must only contain letters (azAZ),
+                        underscores (_), and hyphens (-).</span>
+                </div>
+                <div>
+                    <label for="agency-logo">Agency logo (Base64)</label>
+                    <textarea rows="7" id="agency-logo" value=""></textarea>
+                </div>
+                <input type="submit" value="Create Agency" />
+            </form>
+            <form id="vcForm">
+                <div>
+                    <label for="vc-salutation">Salutation</label>
+                    <input type="text" id="vc-salutation" />
+                </div>
+                <div>
+                    <label for="vc-givenName">Given Name</label>
+                    <input type="text" id="vc-givenName" />
+                </div>
+                <div>
+                    <label for="vc-surname">Surname</label>
+                    <input type="text" id="vc-surname" />
+                </div>
+                <div>
+                    <label for="vc-phoneNumber-countryCode">Phone Country Code</label>
+                    <input type="text" id="vc-phoneNumber-countryCode" />
+                </div>
+                <div>
+                    <label for="vc-phoneNumber-localNumber">Phone Local Number</label>
+                    <input type="text" id="vc-phoneNumber-localNumber" />
+                </div>
+                <div>
+                    <label for="vc-employeeID">Employee ID</label>
+                    <input type="text" id="vc-employeeID" />
+                </div>
+                <div>
+                    <label for="vc-email">Email Address</label>
+                    <input type="text" id="vc-email" />
+                    <span class="error">Please enter a valid email address</span>
+                </div>
+                <div>
+                    <label for="vc-jobTitle">Job Title</label>
+                    <input type="text" id="vc-jobTitle" />
+                </div>
+                <div>
+                    <label for="vc-pcc">Pseudo City Codes (PCCs) [separated by spaces]</label>
+                    <input type="text" id="vc-pcc" />
+                </div>
+                <input type="submit" value="Issue Verifiable Credential" />
+            </form>
+            <form id="revokeForm">
+                <div class="buttons-rows">
+                    <div class="row">
+                        <div class="flex-1">
+                            <label for="revoke-employeeID">Search Verifiable Credentials</label>
+                            <input type="text" placeholder="Enter Employee ID" class="flex-1" id="revoke-employeeID" />
+                        </div>
+                        <div class="action-buttons">
+                            <input type="submit" value="Search" />
+                        </div>
+                    </div>
+                </div>
+                <div class="indexes-container"></div>
+            </form>
+            <div id="result">
+                <div class="result" id="result-data">
+                    <p class="label">Data used</p>
+                    <pre id="data"></pre>
+                </div>
+                <div class="result result-error" id="result-error">
+                    <p class="label" id="error-label">Error</p>
+                    <pre id="error"></pre>
+                </div>
+                <div class="result" id="result-deeplink">
+                    <p class="label" id="link-label">OpenID credential offer</p>
+                    <pre id="link"></pre>
+                    <p></p>
+                    <center>
+                        <img id="qr" />
+                        <button id="deeplink">Trigger deeplink</button>
+                    </center>
+                </div>
+            </div>
+            <div class="backdrop" id="delete-agency">
+                <div class="modal-content">
+                    <div>
+                        <h2>Delete Agency</h2>
+                        <p>Are you sure you want to delete this agency?</p>
+                    </div>
+                    <div style="display: flex;">
+                        <div class="action-buttons">
+                            <input type="submit" onclick="toggleDeleteModal(false)" value="Cancel" />
+                        </div>
+                        <div class="action-buttons">
+                            <input type="submit" onclick="deleteAgency()" value="Delete Agency" class="delete" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+</body>
+
+</html>
