@@ -1,1 +1,0 @@
-# spp-poc-2024-di-wp
