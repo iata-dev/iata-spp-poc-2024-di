@@ -1,6 +1,6 @@
-# IATA End-to-End Proof of Concept Playground (2024–2025)
+# SICPA Playground (2024–2025)
 
-This project serves as a playground for IATA’s end-to-end proof of concept, demonstrating the issuance and verification of digital credentials using the [SICPA Digital Trust Suite](https://docs.dip.sicpa.com/).
+This project serves as a playground for IATA’ proof of concept, demonstrating the issuance and verification of digital credentials using the [SICPA Digital Trust Suite](https://docs.dip.sicpa.com/).
 
 It has been used to issue and verify the following types of credentials:
 
