@@ -81,5 +81,5 @@ Both PoCs rely on a governance framework that uses a trust registry to verify is
 
 ## Presented at WDS 2025
 Both Project 777 (B2B) and Project 321 (B2C) were showcased at the IATA World Data Symposium (WDS) 2025, which brought the industry together to explore data, technology, and cybersecurity.  
-You can find the full white paper [here]([https://www.iata.org/en/programs/data/data-poc/](https://www.iata.org/contentassets/a46387f9bc6b42368c0a72664f6f930f/data-tech-poc-2025.pdf).
+You can find the full white paper [here](https://www.iata.org/contentassets/a46387f9bc6b42368c0a72664f6f930f/data-tech-poc-2025.pdf).
 
